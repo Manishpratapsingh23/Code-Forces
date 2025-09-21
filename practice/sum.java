@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class sum {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int test = sc.nextInt();
+
+        while (test-- > 0) {
+            solve_kro(sc);
+        }
+       
+    }
+
+    private static void solve_kro(Scanner sc){
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        int c = sc.nextInt();
+        if(a+b==c  || b+c==a || c+a==b) System.out.println("Yes");
+        else System.out.println("No ");
+    }
+}

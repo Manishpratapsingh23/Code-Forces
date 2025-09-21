@@ -1,0 +1,6 @@
+# Ignore all compiled Java class files
+*.class
+
+# Ignore VS Code settings (if you don’t want them in git)
+.settings/
+.vscode/
