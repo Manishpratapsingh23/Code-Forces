@@ -1,6 +1,5 @@
 import java.util.Scanner;
-
-public class format {
+public class delta {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
@@ -12,6 +11,13 @@ public class format {
     }
 
     private static void solve_kro(Scanner sc){
-        
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        if(a<b){
+            System.err.println(-1);
+            return;
+        }
+        System.out.println("1");
+        System.out.println(a^b);
     }
 }

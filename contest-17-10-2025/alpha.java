@@ -1,6 +1,5 @@
-import java.util.Scanner;
-
-public class format {
+import java.util.*;
+public class alpha {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
@@ -12,6 +11,12 @@ public class format {
     }
 
     private static void solve_kro(Scanner sc){
-        
+        int n = sc.nextInt();
+        int max = 0;
+        for(int i=0 ;i<n;i++) {
+            int x = sc.nextInt();
+            max = Math.max(x, max);
+        }
+        System.out.println(max);
     }
 }
