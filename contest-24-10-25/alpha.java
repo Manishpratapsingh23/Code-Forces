@@ -1,9 +1,6 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
-public class format {
+public class alpha {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -58,36 +55,27 @@ public class format {
         return prime;
     }
 
-      // SmallestPrime Factors
-    private static List<Integer> SPF(int n){
-        List<Integer> lst = new ArrayList<>();
-        int spf[] = SOE(100000);
-        while(n!=1){
-            lst.add(spf[n]);
-            n = n/spf[n];
-        }
-        return lst;
-    }
-
-    private static int[] SOE(int n){
-        int spf[] = new int[(int) (n+1)];
-        for(int i=1;i<=n;i++) spf[i]=i;
-        for(int i=2;i*i<=n;i++){
-            if(spf[i]==i){
-                for(int j=i*i;j<=n;j+=i){
-                    if(spf[j]==j){
-                        spf[j] = i;
-                    }
-                }
-            }
-        }
-        return spf;
-    }
-
-
 
     private static void solve_kro(Scanner sc){
-        return;
+        long n = sc.nextLong();
+        if(n<=2){
+            System.out.println(0);
+            return;
+        }
+        long low = 1, high = n;
+        int eat = 0;
+        while(n>2){
+            long mid = low+(high-low)/2;
+            long rem = n - (mid<<1);
+            if(rem<mid){
+                high = mid;
+            } else {
+                eat += mid;
+                high = rem;
+                n = rem;
+            }
+        }
+        System.out.println(eat);
     }
 
     public static void main(String[] args) {
@@ -98,6 +86,9 @@ public class format {
             solve_kro(sc);
         }
 
-    
+    //    int prime[] = SieveEratosthenes(10);
+    //    for(int i=2;i<prime.length;i++){
+    //     if(prime[i]==1) System.err.print(i+" ");
+    //   }
     }
 }

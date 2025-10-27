@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class format {
+public class charlie {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -58,36 +58,42 @@ public class format {
         return prime;
     }
 
-      // SmallestPrime Factors
-    private static List<Integer> SPF(int n){
-        List<Integer> lst = new ArrayList<>();
-        int spf[] = SOE(100000);
-        while(n!=1){
-            lst.add(spf[n]);
-            n = n/spf[n];
-        }
-        return lst;
-    }
 
-    private static int[] SOE(int n){
-        int spf[] = new int[(int) (n+1)];
-        for(int i=1;i<=n;i++) spf[i]=i;
-        for(int i=2;i*i<=n;i++){
-            if(spf[i]==i){
-                for(int j=i*i;j<=n;j+=i){
-                    if(spf[j]==j){
-                        spf[j] = i;
-                    }
-                }
-            }
-        }
-        return spf;
-    }
-
-
+  
 
     private static void solve_kro(Scanner sc){
-        return;
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        int nums[] = new int[n];
+        int freq[] = new int[n+1];
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            nums[i] = sc.nextInt();
+            if(nums[i]<=n) freq[nums[i]]++;
+        }
+        int[] prefix = new int[n + 1];
+        for (int i = 1; i <= n; i++) prefix[i] = prefix[i - 1] + freq[i];
+ 
+        int bestGcd = 1;
+
+        for (int g = n; g >= 1; g--) {
+            int rightLimit = Math.min(n, 4 * g - 1);
+            int total = prefix[rightLimit];
+
+            int good = 0;
+            for (int mul = g; mul <= 3 * g && mul <= n; mul += g) {
+                good += freq[mul];
+            }
+
+            int eraseNeeded = total - good;
+            if (eraseNeeded <= k) {
+                bestGcd = g;
+                break;
+            }
+        }
+    
+        System.out.println(bestGcd);
+
     }
 
     public static void main(String[] args) {
@@ -98,6 +104,9 @@ public class format {
             solve_kro(sc);
         }
 
-    
+    //    int prime[] = SieveEratosthenes(10);
+    //    for(int i=2;i<prime.length;i++){
+    //     if(prime[i]==1) System.err.print(i+" ");
+    //   }
     }
 }

@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class format {
+public class fighter1 {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -58,36 +58,44 @@ public class format {
         return prime;
     }
 
-      // SmallestPrime Factors
-    private static List<Integer> SPF(int n){
-        List<Integer> lst = new ArrayList<>();
-        int spf[] = SOE(100000);
-        while(n!=1){
-            lst.add(spf[n]);
-            n = n/spf[n];
-        }
-        return lst;
-    }
 
-    private static int[] SOE(int n){
-        int spf[] = new int[(int) (n+1)];
-        for(int i=1;i<=n;i++) spf[i]=i;
-        for(int i=2;i*i<=n;i++){
-            if(spf[i]==i){
-                for(int j=i*i;j<=n;j+=i){
-                    if(spf[j]==j){
-                        spf[j] = i;
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        int per[] = new int[n+1];
+        int pos[] = new int[n+1];
+        for(int i=1;i<=n;i++){
+            per[i] = sc.nextInt();
+            pos[per[i]] = i;
+        }
+        if(n>=3){
+            boolean modify = true;
+            while(modify){
+                modify = false;
+                for(int i =1;i+2<=n;i++){
+                    if(pos[i+2]<pos[i] && pos[i+2]<pos[i+1]){
+                        int x1 = pos[i+2];
+                        int x2 = pos[i];
+                        int x3 = pos[i+1];
+
+                        per[x1]-=2;
+                        per[x2]+=1;
+                        per[x3]+=1;
+
+                        pos[i] = x1;
+                        pos[i+1] = x2;
+                        pos[i+2] = x3;
+
+                        modify = true;
                     }
                 }
             }
         }
-        return spf;
-    }
+         for (int i = 1; i <= n; i++) {
+                if (i > 1) System.out.print(" ");
+                System.out.print(per[i]);
+            }
+        System.out.println();
 
-
-
-    private static void solve_kro(Scanner sc){
-        return;
     }
 
     public static void main(String[] args) {
@@ -98,6 +106,9 @@ public class format {
             solve_kro(sc);
         }
 
-    
+    //    int prime[] = SieveEratosthenes(10);
+    //    for(int i=2;i<prime.length;i++){
+    //     if(prime[i]==1) System.err.print(i+" ");
+    //   }
     }
 }

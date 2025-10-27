@@ -1,5 +1,5 @@
 import java.util.*;
-public class alpha {
+public class delta {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
@@ -11,7 +11,6 @@ public class alpha {
     }
 
     private static void solve_kro(Scanner sc){
-        int n = sc.nextInt();
         
     }
 }
