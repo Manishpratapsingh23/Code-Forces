@@ -82,7 +82,13 @@ public class alpha {
     }
 
     private static void solve_kro(Scanner sc){
-        return;
+        String s = sc.next();
+        int count = 0;
+        for(char ch : s.toCharArray()){
+            if(ch=='Y') count++;
+        }
+        if(count>1) System.out.println("NO");
+        else System.out.println("YES");
     }
 
     public static void main(String[] args) {

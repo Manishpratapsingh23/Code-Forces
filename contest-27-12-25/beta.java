@@ -82,7 +82,56 @@ public class beta {
     }
 
     private static void solve_kro(Scanner sc){
-        return;
+        String st = sc.next();
+        StringBuilder sb = new StringBuilder(st);
+        int s = 0;
+        Set<Integer> set = new HashSet<>();
+        for(int i=0;i<st.length();i++){
+            char ch = st.charAt(i);
+            if(ch=='s'){
+                set.add(i);
+                s++;
+            }
+        }
+        if(s==st.length()){
+            System.out.println(0);
+            return;
+        }
+        int last = 0;
+        int ans = 0;
+        if(st.charAt(0)=='u'){
+            sb.setCharAt(0, 's');
+            ans++;
+            set.add(0);
+        }
+        int l = st.length();
+        if(st.charAt(l-1)=='u'){
+            sb.setCharAt(l-1, 's');
+            ans++;
+            set.add(l-1);
+        }
+        for(int i=0;i<st.length();i++){
+            if(sb.charAt(i)=='s'){
+                last = i;
+            } else {
+                int targetS = i + (i - last);
+                    
+                    if (targetS < l) {
+                        if (!set.contains(targetS)) {
+                            sb.setCharAt(targetS, 's');
+                            set.add(targetS);
+                            ans++;
+                        }
+                    } else {
+                        sb.setCharAt(i, 's');
+                        set.add(i);
+                        last = i;
+                        ans++;
+                    }
+            }
+        }
+        System.out.println(ans);
+
     }
 
     public static void main(String[] args) {
