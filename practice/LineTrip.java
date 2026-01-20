@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class PalindromeGameHard {
+public class LineTrip {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,44 +83,17 @@ public class PalindromeGameHard {
 
     private static void solve_kro(Scanner sc){
         int n = sc.nextInt();
-	    String s = sc.next();
-
-	    boolean isPalindrome = true;
-	    int cnt0 = 0, cnt1 = 0;
-
-	    for (int i = 0; i < n; i++) {
-	        if (s.charAt(i) == '0') cnt0++;
-	    }
-
-	    for (int i = 0; i < n / 2; i++) {
-	        if (s.charAt(i) != s.charAt(n - 1 - i))
-	            isPalindrome = false;
-
-	        if ((s.charAt(i) == '1' || s.charAt(n - 1 - i) == '1')
-	                && s.charAt(i) != s.charAt(n - 1 - i)) {
-	            cnt1++;
-	        }
-	    }
-
-	    if (isPalindrome) {
-	        if (cnt0 == 1) {
-	            System.out.println("BOB");
-	            return;
-	        }
-	        if (cnt0 % 2 == 1) {
-	            System.out.println("ALICE");
-	            return;
-	        }
-	        System.out.println("BOB");
-	        return;
-	    }
-
-	    if (cnt0 == 2 && cnt1 == 1) {
-	        System.out.println("DRAW");
-	        return;
-	    }
-
-	    System.out.println("ALICE");
+        int x = sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++){
+        	arr[i] = sc.nextInt();
+        }
+        int diff = arr[0];
+        for(int i=1;i<n;i++){
+        	diff = Math.max(diff, arr[i]-arr[i-1]);
+        }
+        diff = Math.max(diff, 2*(x-arr[n-1]));
+        System.out.println(diff);
     }
 
     public static void main(String[] args) {

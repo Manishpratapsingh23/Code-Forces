@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class PalindromeGameHard {
+public class MEXReordering {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,44 +83,18 @@ public class PalindromeGameHard {
 
     private static void solve_kro(Scanner sc){
         int n = sc.nextInt();
-	    String s = sc.next();
+        int z=0,o=0;
+        for(int i=0;i<n;i++){
+        	int x = sc.nextInt();
+        	if(x==0) z++;
+        	if(x==1) o++;
+        }
 
-	    boolean isPalindrome = true;
-	    int cnt0 = 0, cnt1 = 0;
-
-	    for (int i = 0; i < n; i++) {
-	        if (s.charAt(i) == '0') cnt0++;
-	    }
-
-	    for (int i = 0; i < n / 2; i++) {
-	        if (s.charAt(i) != s.charAt(n - 1 - i))
-	            isPalindrome = false;
-
-	        if ((s.charAt(i) == '1' || s.charAt(n - 1 - i) == '1')
-	                && s.charAt(i) != s.charAt(n - 1 - i)) {
-	            cnt1++;
-	        }
-	    }
-
-	    if (isPalindrome) {
-	        if (cnt0 == 1) {
-	            System.out.println("BOB");
-	            return;
-	        }
-	        if (cnt0 % 2 == 1) {
-	            System.out.println("ALICE");
-	            return;
-	        }
-	        System.out.println("BOB");
-	        return;
-	    }
-
-	    if (cnt0 == 2 && cnt1 == 1) {
-	        System.out.println("DRAW");
-	        return;
-	    }
-
-	    System.out.println("ALICE");
+        if((z==1 && o==0) || (z>0 && o>0)){
+        	System.out.println("Yes");
+        	return;
+        }
+        System.out.println("No");
     }
 
     public static void main(String[] args) {
