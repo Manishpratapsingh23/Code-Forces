@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class FlowerCityFence {
+public class alpha {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,28 +83,25 @@ public class FlowerCityFence {
 
     private static void solve_kro(Scanner sc){
         int n = sc.nextInt();
-        int arr[] = new int[n];
-        for(int i=0;i<n;i++) arr[i]=sc.nextInt();
+        int h = sc.nextInt();
+        int l = sc.nextInt();
 
-        if(arr[0]!=n) {
-        	System.out.println("No");
-        	return;
-        }
-        List<Integer> lst = new ArrayList<>();
-        for(int i=n;i>0;i--){
-        	while(lst.size()<arr[i-1]){
-                lst.add(i);
-            }
-        }
-
+        int min = Math.min(h,l);
+        int max = Math.max(h,l);
+        int a=0,b=0,c=0;
         for(int i=0;i<n;i++){
-        	if(arr[i]!=lst.get(i)){
-        		System.out.println("No");
-        		return;
-        	}
+        	int x = sc.nextInt();
+        	if(x<=min) a++;
+        	else if(x>min && x<=max) b++;
+        	else c++;
         }
-
-        System.out.println("Yes");
+        int ans = 0;
+        int m = Math.min(a,b);
+        ans+=m;
+        a-=m;
+        b-=m;
+        ans+=(a/2);
+        System.out.println(ans);
 
 
     }

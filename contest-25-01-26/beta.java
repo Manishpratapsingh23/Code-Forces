@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class FlowerCityFence {
+public class beta {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -84,29 +84,32 @@ public class FlowerCityFence {
     private static void solve_kro(Scanner sc){
         int n = sc.nextInt();
         int arr[] = new int[n];
-        for(int i=0;i<n;i++) arr[i]=sc.nextInt();
-
-        if(arr[0]!=n) {
-        	System.out.println("No");
-        	return;
-        }
-        List<Integer> lst = new ArrayList<>();
-        for(int i=n;i>0;i--){
-        	while(lst.size()<arr[i-1]){
-                lst.add(i);
-            }
-        }
-
+        int place[] = new int[n+1];
+        //int idx = 0;
         for(int i=0;i<n;i++){
-        	if(arr[i]!=lst.get(i)){
-        		System.out.println("No");
-        		return;
+        	arr[i] = sc.nextInt();
+        	//if(arr[i]==n) idx = i;
+        	place[arr[i]]=i;
+        }
+        int pos = 0;
+        int nn = n;
+        while(pos < n && arr[pos]==nn){
+        	pos++;
+        	nn--;
+        }
+        int idx = place[nn];
+        for(int i=0;i<pos;i++){
+        	System.out.print(arr[i]+" ");
+        }
+        for(int i=idx;i>=pos;i--){
+        	System.out.print(arr[i]+" ");
+        }
+        if(pos!=n){
+        	for(int i=idx+1;i<n;i++){
+        		System.out.print(arr[i]+" ");
         	}
         }
-
-        System.out.println("Yes");
-
-
+        System.out.println();
     }
 
     public static void main(String[] args) {

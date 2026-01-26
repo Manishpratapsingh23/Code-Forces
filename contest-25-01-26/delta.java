@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class FlowerCityFence {
+public class delta {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,28 +83,34 @@ public class FlowerCityFence {
 
     private static void solve_kro(Scanner sc){
         int n = sc.nextInt();
-        int arr[] = new int[n];
-        for(int i=0;i<n;i++) arr[i]=sc.nextInt();
-
-        if(arr[0]!=n) {
-        	System.out.println("No");
-        	return;
-        }
-        List<Integer> lst = new ArrayList<>();
-        for(int i=n;i>0;i--){
-        	while(lst.size()<arr[i-1]){
-                lst.add(i);
-            }
-        }
-
+        long a[] = new long[n];
+        //int b[] = new int[n];
+        long prefix[] = new long[n];
         for(int i=0;i<n;i++){
-        	if(arr[i]!=lst.get(i)){
-        		System.out.println("No");
-        		return;
-        	}
+            a[i] = sc.nextInt();
         }
-
-        System.out.println("Yes");
+        for(int i=0;i<n;i++){
+            prefix[i] = sc.nextLong();
+            if(i>0) prefix[i]+=prefix[i-1];
+        }
+        Arrays.sort(a);
+        long ans = 0;
+        
+        for(int i=1;i<=n;i++){
+            int mid = 0;
+            int sword = (n-i+1);
+            int l=0,r=n-1;
+            while(l<=r){
+                mid = l+(r-l)/2;
+                if(prefix[mid]<=sword){
+                    ans = Math.max(ans, (mid+1)*a[i-1]);
+                    l=mid+1;
+                } 
+                else r = mid-1;
+            }
+            
+        }
+        System.out.println(ans);
 
 
     }
