@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class charlie {
+public class alpha {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,7 +82,25 @@ public class charlie {
     }
 
     private static void solve_kro(Scanner sc){
-        return;
+        int n = sc.nextInt();
+        int arr[] = new int[n+1];
+        boolean occ[] = new boolean[n+1];
+        arr[n]=n;
+        occ[n]=true;
+        for(int i=n-1;i>0;i--){
+            if(i+arr[i+1]>=n){
+                arr[i] = arr[i+1]-i;
+                occ[arr[i]] = true;
+            }
+            else{
+                int x = i+arr[i+1];
+                if(!occ[x]) arr[i] = x;
+                else arr[i] = arr[i+1]-i;
+                occ[arr[i]] = true;
+            }
+        }
+        for(int i=1;i<=n;i++) System.out.print(arr[i]+" ");
+        System.out.println();
     }
 
     public static void main(String[] args) {

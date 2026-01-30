@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class delta {
+public class beta {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,9 +81,43 @@ public class delta {
         return spf;
     }
 
-    private static void solve_kro(Scanner sc){
-        return;
+    static class pair{
+        int a;
+        int b;
+        public pair(int a, int b){
+            this.a = a;
+            this.b = b;
+        }
     }
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        String s = sc.next();
+        int zero=0;
+        int ans = 0;
+        int left=-1,right=-1;
+        for(int i=0;i<n;i++){
+            if(s.charAt(i)=='1'){
+                ans++;
+                if(left==-1) left=i;
+                right = i;
+            }
+        }
+        if(ans==0){
+            System.out.println((n+2)/3);
+            return;
+        }
+        int ll = left+1;
+        ans+=ll/3;
+        int rr = n-right;
+        ans+=rr/3;
+
+        for(int i=left+1;i<n;i++){
+            if(s.charAt(i)=='1'){
+                ans+=zero/3;
+                zero=0;
+            } else zero++;
+        }
+        System.out.println(ans);
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

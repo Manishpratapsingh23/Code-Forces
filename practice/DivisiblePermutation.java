@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class beta {
+public class DivisiblePermutation {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,7 +82,17 @@ public class beta {
     }
 
     private static void solve_kro(Scanner sc){
-        return;
+        int n = sc.nextInt();
+        int arr[] = new int[n];
+        int a=1, b=n;
+        for(int i=n-1;i>=0;i--){
+        	if(i%2!=0) arr[i]=b--;
+        	else arr[i]=a++;
+        }
+        for(int i : arr){
+        	System.out.print(i+" ");
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class alpha {
+public class SameDiffrence {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,7 +82,16 @@ public class alpha {
     }
 
     private static void solve_kro(Scanner sc){
-        return;
+        int n = sc.nextInt();
+        Map<Long, Long> map = new HashMap<>();
+        long res = 0;
+        for(int i=1;i<=n;i++){
+        	long x = sc.nextLong();
+        	long diff = (long)(x-i);
+        	res+=map.getOrDefault(diff,0L);
+        	map.put(diff, map.getOrDefault(diff,0L)+1);
+        }
+        System.out.println(res);
     }
 
     public static void main(String[] args) {
