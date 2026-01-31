@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MakeAlmostEqualWithMod {
+public class DistrictConnections {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,24 +81,43 @@ public class MakeAlmostEqualWithMod {
         return spf;
     }
 
+    static class pair{
+    	int a,b;
+    	public pair(int a, int b){
+    		this.a=a;
+    		this.b=b;
+    	}
+    }
+
     private static void solve_kro(Scanner sc){
         int n = sc.nextInt();
         long arr[] = new long[n];
         for(int i=0;i<n;i++) arr[i]=sc.nextLong();
-        long ans=0;
-        for(int i=1;i<=60;i++){
-            Set<Long> set = new HashSet<>();
-            long kk = 1L<<i;
-            for(long ll : arr){
-                set.add(ll%kk);
-            }
-
-            if(set.size()==2){
-                ans=kk;
-                break;
-            }
+        int idx=-1;
+        List<pair> lst = new ArrayList();
+        for(int i=1;i<n;i++){
+        	if(arr[0]!=arr[i]){
+        		idx=i;
+        		lst.add(new pair(1,i+1));
+        	}
         }
-        System.out.println(ans);
+
+        if(idx==-1){
+        	System.out.println("NO");
+        	return;
+        }
+
+        for(int i=1;i<n;i++){
+        	if(arr[0]==arr[i]){
+        		lst.add(new pair(idx+1, i+1));
+        	}
+        }
+
+        System.out.println("YES");
+
+        for(pair p : lst) System.out.println(p.a+" "+p.b);
+        //System.out.println();
+
     }
 
     public static void main(String[] args) {

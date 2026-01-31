@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MakeAlmostEqualWithMod {
+public class DominantPiranah {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -84,21 +84,36 @@ public class MakeAlmostEqualWithMod {
     private static void solve_kro(Scanner sc){
         int n = sc.nextInt();
         long arr[] = new long[n];
-        for(int i=0;i<n;i++) arr[i]=sc.nextLong();
-        long ans=0;
-        for(int i=1;i<=60;i++){
-            Set<Long> set = new HashSet<>();
-            long kk = 1L<<i;
-            for(long ll : arr){
-                set.add(ll%kk);
-            }
+        List<Integer> lst = new ArrayList<>();
+        long max = Integer.MIN_VALUE;
+        for(int i=0;i<n;i++){
+        	arr[i]  = sc.nextLong();
+        	max=Math.max(arr[i],max);
+        }
 
-            if(set.size()==2){
-                ans=kk;
+        for(int i=0;i<n;i++){
+            if(arr[i]==max) lst.addLast(i+1);
+        }
+        if(lst.size()==n){
+            System.out.println(-1);
+            return;
+        }
+        //System.out.println(lst);
+        int ans = 0;
+        for(int i=0;i<lst.size()-1;i++){
+            if(lst.get(i+1)-lst.get(i)>1){
+                ans=lst.get(i);
                 break;
             }
         }
+        if(ans!=0){
+            System.out.println(ans);
+            return;
+        }
+        if(lst.get(0)==1){ ans = lst.get(lst.size()-1);}
+        else ans = lst.get(0);
         System.out.println(ans);
+
     }
 
     public static void main(String[] args) {

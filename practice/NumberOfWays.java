@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MakeAlmostEqualWithMod {
+public class NumberOfWays {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -80,32 +80,38 @@ public class MakeAlmostEqualWithMod {
         }
         return spf;
     }
-
+    static long sum;
+    static long ans;
     private static void solve_kro(Scanner sc){
+    	sum=0;
+    	ans=0;
         int n = sc.nextInt();
         long arr[] = new long[n];
-        for(int i=0;i<n;i++) arr[i]=sc.nextLong();
-        long ans=0;
-        for(int i=1;i<=60;i++){
-            Set<Long> set = new HashSet<>();
-            long kk = 1L<<i;
-            for(long ll : arr){
-                set.add(ll%kk);
-            }
-
-            if(set.size()==2){
-                ans=kk;
-                break;
-            }
+        for(int i=0;i<n;i++){
+        	arr[i]=sc.nextLong();
+        	sum+=arr[i];
         }
+        if(n<3 || sum%3!=0){
+        	System.out.println(0);
+        	return;
+        }
+        long tt = sum/3;
+        long prefix=0;
+        long cnt=0;
+        for(int i=0;i<n-1;i++){
+        	prefix+=arr[i];       	
+        	if(prefix==2*tt) ans+=cnt;
+        	if(prefix==tt) cnt++;
+        }
+        
         System.out.println(ans);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int test = sc.nextInt();
-        while (test-- > 0) {
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
+        //}
     }
 }
