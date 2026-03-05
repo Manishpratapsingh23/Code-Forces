@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class Chocolates {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,30 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++) arr[i] = sc.nextInt();
+
+        long ans=arr[n-1];
+        long prev = ans;
+        for(int i=n-2;i>=0;i--){
+        	if(prev>arr[i]){
+        		ans+=arr[i];
+        		prev=arr[i];
+        	} else if(prev>0) {
+        		ans+=prev-1;
+        		prev-=1;
+        	}
+        }
+        System.out.println(ans);
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
+        //}
     }
 }

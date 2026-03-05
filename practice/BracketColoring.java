@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class BracketColoring {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,8 +83,55 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	out = new StringBuilder();
+    	int n = sc.nextInt();
+    	int open=0,close=0;
+    	String s = sc.next();
+    	for(char ch : s.toCharArray()){
+    		if(ch=='(') open++;
+    		else close++;
+    	}
+    	if(open != close){
+    		System.out.println(-1);
+    		return;
+    	}
+
+    	int balance = 0;
+    	int prev = 0;
+    	int c1=0,c2=0;
+    	for(char ch : s.toCharArray()){
+    		prev=balance;
+    		if(ch=='(') balance++;
+    		else balance--;
+    		if(balance==0){
+    			if(prev>=0){
+    				out.append(1).append(' ');
+    				c1++;
+    			}
+    			else{
+    				out.append(2).append(' ');
+    				c2++;
+    			}
+    		} else if(balance>0){
+    			out.append(1).append(' ');
+    			c1++;
+    		}
+    		else{
+    			out.append(2).append(' ');
+    			c2++;
+    		}
+    	}
+    	if(c1==n || c2==n){
+            System.out.println(1);
+            for(int i=0;i<n;i++){
+                System.out.print(1+" ");
+            }
+            System.out.println();
+            return;
+        }
+    	System.out.println(2);
+    	System.out.println(out.toString());
+
         
     }
 

@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class PleasentPairs {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,36 +80,41 @@ class Main {
         }
         return spf;
     }
+    static class pair{
+    	long idx;
+    	long value;
+    	public pair(, int value){
+    		this.idx=idx;
+    		this.value=value;
+    	}
+    }
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        pair arr[] = new pair[n];
+        for(int i=1;i<=n;i++){
+        	int data = sc.nextInt();
+        	arr[i-1] = new pair(i, data);
+        }
+        Arrays.sort(arr,(pair a, pair b) -> (a.value-b.value));
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+        int ans = 0;
+
+        for(int i=0;i<n-1;i++){
+        	for(int j=i+1;j<n;j++){
+        		long val = arr[i].value*arr[j].value;
+        		if(val>=2*n) break;
+        		long sum = arr[i].idx+arr[j].idx;
+        		if(val==sum) ans++;
+        	}
+        }
+        System.out.println(ans);
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

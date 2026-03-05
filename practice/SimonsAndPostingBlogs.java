@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class SimonsAndPostingBlogs {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,10 +81,46 @@ class Main {
         }
         return spf;
     }
-
+    static int v = 1000006;
+    static int nn = 30000;
+    static boolean visited[] = new boolean[v];
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	
+    	int n = sc.nextInt();
+    	List<List<Integer>> lst = new ArrayList<>();
+    	for(int i=0;i<n;i++){
+    		int l = sc.nextInt();
+    		int arr[] = new int[l];
+    		for(int j=0;j<l;j++) arr[j]=sc.nextInt();
+    		List<Integer> ff = new ArrayList<>();
+    		for(int j=l-1;j>=0;j--){
+    			if(visited[arr[j]]) continue;
+    			visited[arr[j]]=true;
+    			ff.add(arr[j]);
+    		}
+    		for(int j=0;j<l;j++) visited[arr[j]]=false;
+    		lst.add(ff);
+    	}
+
+    	StringBuilder sb = new StringBuilder();
+    	while(!lst.isEmpty()){
+    		Collections.sort(lst, (a,b)->{
+    			int s = Math.min(a.size(),b.size());
+    			for(int i=0;i<s;i++){
+    				int cmp = Integer.compare(a.get(i), b.get(i));
+                	if (cmp != 0) return cmp;
+    			}
+    			return a.size()-b.size();
+    		});
+
+    		List<Integer> gg = lst.get(0);
+    		for(int i : gg){
+    			sb.append(i).append(" ");
+    			for(int j=1;j<lst.size();j++) lst.get(j).remove(Integer.valueOf(i));
+    		}
+    		lst.remove(0);
+    	}
+    	System.out.println(sb.toString());
         
     }
 

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class Pride {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,19 +83,48 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    	int n = sc.nextInt();
+    	int arr[] = new int[n];
+    	boolean allEven=true;
+    	int one=0;
+    	boolean isPrime = false;
+    	for(int i=0;i<n;i++){
+    		arr[i]=sc.nextInt();
+    		if((arr[i]&1)==1){
+    			allEven=false;
+    		}
+    		if(arr[i]==1) one++;
+    	}
+    	if(one>0){
+    		System.out.println(n-one);
+    		return;
+    	}
+    	if(allEven || n==1){
+    		System.out.println(-1);
+    		return;
+    	}
+    	
+    	int ans = 2*n;
+    	for(int i=0;i<n;i++){
+    		int g = arr[i];
+    		for(int j=i+1;j<n;j++){
+    			g = GCD(g,arr[j]);
+    			if(g==1){
+    				ans=Math.min(ans, (n-1)+(j-i));
+    				break;
+    			}
+    		}
+    	}
+    	System.out.println(ans);
     }
 
     static FastScanner sc = new FastScanner();
     static StringBuilder out = new StringBuilder();
-
     public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
+       // }
     }
 
     static class FastScanner{

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class TwoTV {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,10 +81,35 @@ class Main {
         }
         return spf;
     }
-
+    static class pair{
+    	long first;
+    	long second;
+    	pair(long first, long second){
+    		this.first=first;
+    		this.second=second;
+    	}
+    }
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	int n = sc.nextInt();
+    	pair arr[] = new pair[n];
+    	for(int i=0;i<n;i++) arr[i] = new pair(sc.nextLong(), sc.nextLong());
+
+    	Arrays.sort(arr, (pair a, pair b)->Long.compare(a.first,b.first));
+    	pair tv1=null;
+    	pair tv2=null;
+    	for(pair t : arr){
+    		if(tv1==null) tv1=t;
+    		else if(tv2==null) tv2=t;
+    		else if(tv1.second<t.first){
+    			tv1=t;
+    		} else if(tv2.second<t.first){
+    			tv2=t;
+    		} else {
+    			System.out.println("NO");
+    			return;
+    		}
+    	}
+    	System.out.println("YES");
         
     }
 
@@ -92,10 +117,10 @@ class Main {
     static StringBuilder out = new StringBuilder();
 
     public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
+        //}
     }
 
     static class FastScanner{

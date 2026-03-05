@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class ZeroQuantityMaximization {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -16,7 +16,9 @@ class Main {
         return true;
     }
 
-    private static int GCD(int a, int b){
+    private static long GCD(long a, long b){
+        a = Math.abs(a);
+        b = Math.abs(b);
         while(a>0 && b>0){
             if(a>b) a = a%b;
             else b = b%a;
@@ -83,19 +85,70 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	int n = sc.nextInt();
+    	long a[] = new long[n];
+    	long b[] = new long[n];
+    	for(int i=0;i<n;i++) a[i]=sc.nextLong();
+    	for(int i=0;i<n;i++) b[i]=sc.nextLong();
+    	Map<pair, Long> map = new HashMap<>();
+    	long ans = 0;
+    	for(int i=0;i<n;i++){
+    		if(a[i]==0){
+    			if(b[i]==0) ans++;
+    			continue;
+    		}
+            long p=-b[i];
+            long q=a[i];
+    		long gcd = GCD(p, q);
+    	    p = p/gcd;
+            q = q/gcd;
+    		if(q<0){
+                p*=-1;
+                q*=-1;
+            }
+            pair pp = new pair(p,q);
+            map.put(pp, map.getOrDefault(pp,0L)+1);
+
+        	//ans = Math.max(ans, count);
+    	}
+        long max = 0;
+        for(pair key : map.keySet()){
+            max = Math.max(max, map.get(key));
+        }
+    	System.out.println(max+ans);
         
+    }
+    private static final class pair {
+        final long p; // numerator
+        final long q; // denominator (always non-negative after normalization)
+
+        pair(long p, long q) {
+            this.p = p;
+            this.q = q;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof pair)) return false;
+            pair other = (pair) o;
+            return p == other.p && q == other.q;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(p, q);
+        }
     }
 
     static FastScanner sc = new FastScanner();
     static StringBuilder out = new StringBuilder();
 
     public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+        //int test = sc.nextInt();
+       // while (test-- > 0) {
             solve_kro(sc);
-        }
+        //}
     }
 
     static class FastScanner{

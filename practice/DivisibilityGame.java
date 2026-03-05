@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class DivisibilityGame {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,9 +83,68 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        int a[] = new int[n];
+        int b[] = new int[m];
+
+        for(int i=0;i<n;i++) a[i] = sc.nextInt();
+        for(int i=0;i<m;i++) b[i] = sc.nextInt();
+
+        int max = n + m + 1;
+
+        int cntA[] = new int[max];
+        int cntB[] = new int[max];
+        int cntDel[] = new int[max];
+
+        for(int i=0;i<n;i++){
+            if(a[i] < max) cntA[a[i]]++;
+        }
+
+        for(int i=0;i<m;i++){
+            if(b[i] < max) cntB[b[i]]++;
+        }
+
+        for(int i=1;i<max;i++){
+            if(cntA[i] > 0){
+                for(int j=i;j<max;j+=i){
+                    cntDel[j] += cntA[i];
+                }
+            }
+        }
+
+        int aa = 0, bb = 0;
+
+        for(int i=1;i<max;i++){
+            if(cntB[i] == 0) continue;
+
+            if(cntDel[i] == 0) bb += cntB[i];       // fixed
+            else if(cntDel[i] == n) aa += cntB[i];  // fixed
+        }
+
+        int cc = m - aa - bb;
+
+        boolean turn = false;
+
+        while(true){
+            if(!turn){ // Alice
+                if(cc > 0) cc--;
+                else if(aa > 0) aa--;
+                else{
+                    System.out.println("Bob");
+                    return;
+                }
+            } else { // Bob
+                if(cc > 0) cc--;
+                else if(bb > 0) bb--;
+                else{
+                    System.out.println("Alice");
+                    return;
+                }
+            }
+            turn = !turn;
+        }
     }
 
     static FastScanner sc = new FastScanner();

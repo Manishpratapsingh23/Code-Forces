@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class alpha {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,70 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    private static void solve_kro(Scanner sc){
+        long x = sc.nextLong();
+        long y = sc.nextLong();
+        // x%=9;
+        // if(x==0 && y==0){
+        // 	System.out.println("Yes");
+        // 	return;
+        // }
+        // if(x==2 && y==-1){
+        // 	System.out.println("Yes");
+        // 	return;
+        // }
+
+        // if(x==3 && y==0){
+        // 	System.out.println("Yes");
+        // 	return;
+        // }
+
+        // if(x==4 && (y>=-1 && y<=2)){
+        // 	System.out.println("Yes");
+        // 	return;
+        // }
+
+        // if(x==5 && y==1){
+        // 	System.out.println("Yes");
+        // 	return;
+        // }
+
+        // if(x==6 && (y==0 || y==3)){
+        // 	System.out.println("Yes");
+        // 	return;
+        // }
+
+        // if(x==7 && (y==-1 || y==1 )){
+        // 	System.out.println("Yes");
+        // 	return;
+        // }
+
+        // if(x==8 && y==4 || y==2){
+        // 	System.out.println("Yes");
+        // 	return;
+        // }
+
+        // System.out.println("No");
+        if ((x - 2 * y) % 3 != 0) {
+            System.out.println("No");
+            return;
+        }
+
+        boolean res=true;
+        if (y >= 0) {
+            res = (x >= 2 * y);
+        } else {
+            res = (x >= -4 * y);
+        }
+
+        System.out.println(res ? "Yes" : "No");
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

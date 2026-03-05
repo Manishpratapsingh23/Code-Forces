@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class delta {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,10 +82,66 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    private static void solve_kro(FastScanner sc) throws Exception {
+        int n = sc.nextInt();
+        int x = sc.nextInt();
+        int y = sc.nextInt();
         
+        List<Integer> A = new ArrayList<>();
+        List<Integer> B = new ArrayList<>();
+        List<Integer> C = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            int val = sc.nextInt();
+            if (i <= x) {
+                A.add(val);
+            } else if (i <= y) {
+                B.add(val);
+            } else {
+                C.add(val);
+            }
+        }
+        int minB = Integer.MAX_VALUE;
+        int minIndex = -1;
+        for (int i = 0; i < B.size(); i++) {
+            if (B.get(i) < minB) {
+                minB = B.get(i);
+                minIndex = i;
+            }
+        }
+        List<Integer> shiftedB = new ArrayList<>(B.size());
+        for (int i = 0; i < B.size(); i++) {
+            shiftedB.add(B.get((minIndex + i) % B.size()));
+        }
+        
+        List<Integer> D = new ArrayList<>(A.size() + C.size());
+        D.addAll(A);
+        D.addAll(C);
+        
+        
+        int insertIdx = D.size();
+        for (int i = 0; i < D.size(); i++) {
+            if (D.get(i) > shiftedB.get(0)) {
+                insertIdx = i;
+                break;
+            }
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        // ho gya ho gya
+        for (int i = 0; i < insertIdx; i++) {
+            sb.append(D.get(i)).append(" ");
+        }
+        
+        for (int val : shiftedB) {
+            sb.append(val).append(" ");
+        }
+        
+        for (int i = insertIdx; i < D.size(); i++) {
+            sb.append(D.get(i)).append(" ");
+        }
+        
+        System.out.println(sb.toString().trim());
     }
 
     static FastScanner sc = new FastScanner();

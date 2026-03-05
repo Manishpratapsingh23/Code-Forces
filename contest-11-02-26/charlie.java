@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class charlie {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,23 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    private static void solve_kro(Scanner sc){
+        long p = sc.nextLong();
+        long q = sc.nextLong();
+
+        long diff = q-p;
+        if(diff>0 && (3*p>=2*q)){
+            System.out.println("Bob");
+            return;
+        }
+        System.out.println("Alice");
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

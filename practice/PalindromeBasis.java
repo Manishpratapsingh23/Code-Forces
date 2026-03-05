@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class PalindromeBasis {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,17 +81,49 @@ class Main {
         }
         return spf;
     }
+    static int arr[] = new int[498];
+    static void compute(){
+    	int idx=0;
+    	for(int i=1;i<40000;i++){
+    		if(isPalindrome(i)){
+    			arr[idx++]=i;
+    		}
+    	}
+    }
 
+    static boolean isPalindrome(int n){
+    	int t = n;
+    	int rev = 0;
+    	while(n>0){
+    		int r = n%10;
+    		rev = rev*10+r;
+    		n/=10;
+    	}
+    	return rev==t;
+    }
+    static int mod = 1000000007;
+    static int dp[];
+    static void computeDp(){
+    	dp = new int[400001];
+    	dp[0] = 1;
+	    for(int coin : arr) {
+	        for(int sum = coin; sum <= 40000; sum++) {
+	            dp[sum] = (dp[sum] + dp[sum - coin]) % mod;
+	        }
+	    }
+    }
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    	int n = sc.nextInt();
+
+	    System.out.println(dp[n]);
     }
 
     static FastScanner sc = new FastScanner();
     static StringBuilder out = new StringBuilder();
 
     public static void main(String[] args) throws Exception {
+    	compute();
+    	computeDp();
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);

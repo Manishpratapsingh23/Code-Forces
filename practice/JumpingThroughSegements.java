@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class JumpingThroughSegements {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,44 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    public static boolean canReach(long k, long a[], long b[]){
+    	long max = 0, min = 0;
+    	for(int i=0;i<a.length;i++){
+    		min-=k;
+    		max+=k;
+    		long start = Math.max(min, a[i]);
+    		long end = Math.min(max, b[i]);
+    		if(start>end) return false;
+    		min = start;
+    		max = end;
+    	}
+    	return true;
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        long a[] = new long[n];
+        long b[] = new long[n];
 
-    public static void main(String[] args) throws Exception {
+        for(int i=0;i<n;i++){
+        	a[i] = sc.nextLong();
+        	b[i] = sc.nextLong();
+        }
+
+        long l=0,r=1000000000;
+        while(l<r){
+        	long m = l+(r-l)/2;
+        	if(canReach(m,a,b)) r=m;
+        	else l=m+1;
+        }
+        System.out.println(l);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

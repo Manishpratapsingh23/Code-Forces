@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class Dances  {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,9 +83,48 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	int n = sc.nextInt();
+        int mid = sc.nextInt();
+    	int a[] = new int[n];
+    	int b[] = new int[n];
+    	a[0]=1;
+    	for(int i=1;i<n;i++) a[i] = sc.nextInt();
+    	for(int i=0;i<n;i++) b[i] = sc.nextInt();
+
+    	Arrays.sort(a);
+    	Arrays.sort(b);
+
+    	int l = 0, r = n-1;
+        while(l<r){
+            int t=b[l];
+            b[l]=b[r];
+            b[r]=t;
+            l++;
+            r--;
+        }
+        l=0;r=n;
+    	int ans = n;
+    	while(l<r){
+    		int m = (l+r)>>>1;
+    		if(isValid(a,b,m)){
+                r=m;
+    		} else {
+    			l=m+1;
+    		}
+    	}
+    	System.out.println(l);
+    }
+
+    private static boolean isValid(int a[], int b[], int k){
+    	int n = a.length;
+        int remaining = n - k;
         
+        for (int i = 0; i < remaining; i++) {
+            if (a[i] >= b[remaining-1-i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     static FastScanner sc = new FastScanner();

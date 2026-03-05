@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class CopilCopacDrawsTrees {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,11 +81,57 @@ class Main {
         }
         return spf;
     }
-
+    static Map<Integer, List<Integer>> map;
+    static Map<String, Integer> rank;
+    static int parent[];
+    static boolean[] visited;
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    	int n = sc.nextInt();
+    	visited = new boolean[n+1];
+        parent = new int[n+1];
+        rank = new HashMap<>();
+        map = new HashMap<>();
+        for(int i=1;i<=n;i++) map.put(i, new ArrayList<>());
+    	Arrays.fill(visited, false);
+    	for(int i=1;i<n;i++){
+            int src = sc.nextInt();
+            int des = sc.nextInt();
+            map.get(src).add(des);
+            map.get(des).add(src);
+            rank.put(src+" "+des, i);
+            rank.put(des+" "+src, i);
+        }
+        parent[0]=-1;
+        parent[1]=0;
+        Arrays.fill(visited, false);
+        visited[1]=true;
+        int dp[] = new int[n+1];
+        dp[1]=1;
+        int ans = 1;
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(1);
+        while(!queue.isEmpty()){
+            int node = queue.remove();
+            for(int nbrs : map.get(node)){
+                if(visited[nbrs]) continue;
+                visited[nbrs]=true;
+                parent[nbrs]=node;
+                String key  = parent[node]+" "+node;
+                String child = node+" "+nbrs;
+                if(parent[node]!=0){
+                    if(rank.get(child)<rank.get(key)){
+                        dp[nbrs]=dp[node]+1;
+                    } else dp[nbrs]=dp[node];
+                } else dp[nbrs]=1;
+                ans = Math.max(ans, dp[nbrs]);
+                queue.add(nbrs);
+            }
+        }
+        // for(int i : parent){
+        //     System.out.print(i+" ");
+        // }
+        // System.out.println();
+        System.out.println(ans);
     }
 
     static FastScanner sc = new FastScanner();

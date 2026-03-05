@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class MortalKombatTower {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,60 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++){
+        	arr[i] = sc.nextInt();
+        }
+
+        int ans = 0;
+        if(arr[0]==1) ans++;
+        int start=0;
+        if(n>1) start = arr[1];
+        int prev = 1;
+        for(int i=1;i<n;i++){
+        	if(arr[i]==start) continue;
+        	else {
+        		int segement = i-prev;
+        		prev = i;
+        		if(start==1) ans+= Math.floor(segement/3);
+        		start = arr[i];
+        	}
+        }
+        if(start==1){
+        	int segement = n-prev;
+        	ans+=Math.floor(segement/3);
+        }
+        System.out.println(ans);
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
+    private static void solve(Scanner sc){
+        int n = sc.nextInt();
+        int arr[] = new int[n+1];
+        for(int i=0;i<n;i++){
+            arr[i] = sc.nextInt();
+        }
 
-    public static void main(String[] args) throws Exception {
+        int dp[][] = new int[n+1][2];
+        dp[n][0]=0;
+        dp[n][1]=0;
+        dp[n-1][0]=0;
+        dp[n-1][1]=arr[n-1];
+
+        for(int i=n-2;i>=0;i--){
+            dp[i][0] = Math.min(dp[i+1][1], dp[i+2][1]);
+            dp[i][1] = Math.min(dp[i+1][0]+arr[i], dp[i+2][0]+arr[i]+arr[i+1]);
+        }
+
+        System.out.println(dp[0][1]);
+    } 
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
-            solve_kro(sc);
+            solve(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

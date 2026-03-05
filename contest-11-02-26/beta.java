@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class beta {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,64 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        int p[] = new int[n];
+        int a[] = new int[n];
+
+        for(int i=0;i<n;i++) p[i] = sc.nextInt();
+        for(int i=0;i<n;i++) a[i] = sc.nextInt();
+
+        int ans[] = new int[n];
+
+        for(int i=0;i<n;i++){
+        	if(a[i]==p[i]){
+        		ans[i]=p[i];
+        		continue;
+        	}
+
+        	if(i>0 && (a[i]==ans[i-1] || a[i]==p[i-1])){
+        		ans[i]=a[i];
+        		continue;
+        	}
+
+        	if(i<n-1 && (a[i]==ans[i+1] || a[i]==p[i+1])){
+        		ans[i]=a[i];
+        		continue;
+        	}
+        }
+
+        for(int i=n-1;i>=0;i--){
+        	if(a[i]==p[i]){
+        		ans[i]=p[i];
+        		continue;
+        	}
+
+        	if(i>0 && (a[i]==ans[i-1] || a[i]==p[i-1])){
+        		ans[i]=a[i];
+        		continue;
+        	}
+
+        	if(i<n-1 && (a[i]==ans[i+1] || a[i]==p[i+1])){
+        		ans[i]=a[i];
+        		continue;
+        	}
+        }
+
+        for(int i=0;i<n;i++){
+        	if(ans[i]!=a[i]){
+        		System.out.println("No");
+        		return;
+        	}
+        }
+        System.out.println("Yes");
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

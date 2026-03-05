@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class DivisiblePairs {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,50 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        int x = sc.nextInt();
+        int y = sc.nextInt();
+
+        int arr[] = new int[n];
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for(int i=0;i<n;i++){
+        	arr[i] = sc.nextInt();
+        	int r = arr[i]%y;
+        	map.putIfAbsent(r, new ArrayList<>());
+            map.get(r).add(arr[i]);
+        }
+
+        long ans = 0;
+        for(List<Integer> val : map.values()){
+        	Map<Integer, Long> map1 = new HashMap<>();
+        	for(int v : val){
+        		int r = v%x;
+        		map1.put(r, map1.getOrDefault(r,0L)+1);
+        	}
+
+        	Set<Integer> set = new HashSet<>();
+        	for(int r : map1.keySet()){
+        		long cnt = map1.get(r);
+        		if(set.contains(r)) continue;
+        		if(r==0 || (x%2==0 && r==x/2)){
+        			ans += (cnt*(cnt-1))/2;
+        		} else {
+        			long cnt1 = map1.getOrDefault(x-r,0L);
+        			ans+=cnt*cnt1;
+        			set.add(x-r);
+        		}
+        		set.add(r);
+        	}
+        }
+        System.out.println(ans);
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

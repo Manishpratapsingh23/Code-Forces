@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class WonderRoom {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,44 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    private static void solve_kro(Scanner sc){
+        long n = sc.nextLong();
+        long a = sc.nextLong();
+        long b = sc.nextLong();
+        long total = n*6;
         
+        if(total<=a*b){
+        	System.out.println(a*b);
+        	System.out.println(a+" "+b);
+        	return;
+        }
+        long min = Math.min(a,b);
+        long max = Math.max(b,a);
+        //long i = min;
+        long area = (long)Math.pow(10,18);
+        for(long i=min;i*i<=total;++i){
+        	long bb = total/i;
+        	if(bb*i<total) bb++;
+        	if(bb<Math.max(b,a)) continue;
+        	if(bb*i<area){
+        		area=bb*i;
+        		min=i;
+        		max=bb;
+        	}
+        }
+        System.out.println(area);
+        if(a>b){
+        	System.out.println(max+" "+min);
+        } else {
+        	System.out.println(min+" "+max);
+        }		
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
+        //}
     }
 }

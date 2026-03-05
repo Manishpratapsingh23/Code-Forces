@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class BeautifulNumber {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,42 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    private static void solve_kro(Scanner sc){
+        long n = sc.nextLong();
+        String s = String.valueOf(n);
+        int nn = s.length();
+        int arr[] = new int[nn];
+        int sum=0;
+        for(int i=0;i<nn;i++){
+        	char ch = s.charAt(i);
+        	if(i==0) arr[i] = ch-'0'-1;
+        	else arr[i] = ch-'0';
+        	sum+=ch-'0';
+        }
+
+        if(nn==1 || sum<10){
+        	System.out.println(0);
+        	return;
+        }
+        Arrays.sort(arr);
+        //Arrays.reverse(arr);
+        //int cnt = 0;
+        for(int i=nn-1;i>=0;i--){
+        	sum-=arr[i];
+        	if(sum<10){
+        		System.out.println(nn-i);
+        		return;
+        	}
+
+        }
+
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

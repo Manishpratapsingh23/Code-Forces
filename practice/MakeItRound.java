@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class MakeItRound {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,9 +82,36 @@ class Main {
         return spf;
     }
 
+    static long p5[] = new long[19];
+    static long p2[] = new long[19];
+
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	long n = sc.nextLong();
+    	long m = sc.nextLong();
+    	int c2=0,c5=0;
+        long temp = n;
+        while(temp%2==0){
+            c2++;
+            temp/=2;
+        }
+
+        temp=n;
+        while(temp%5==0){
+            c5++;
+            temp/=5;
+        }
+
+        for(int i=18;i>=0;i--){
+            int d2 = Math.max(0,i-c2);
+            int d5 = Math.max(0,i-c5);
+            long k = p2[d2]*p5[d5];
+            if(k>m) continue;
+            long num = m-(m%k);
+            System.out.println(n*num);
+            return;
+        }
+        System.out.println(n*m);
+    	
         
     }
 
@@ -93,6 +120,12 @@ class Main {
 
     public static void main(String[] args) throws Exception {
         int test = sc.nextInt();
+        p2[0]=1;
+        p5[0]=1;
+        for(int i=1;i<=18;i++){
+            p2[i]=2L*p2[i-1];
+            p5[i]=5L*p5[i-1];
+        }
         while (test-- > 0) {
             solve_kro(sc);
         }

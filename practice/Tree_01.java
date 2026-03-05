@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class Tree_01 {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,11 +81,66 @@ class Main {
         }
         return spf;
     }
-
+    static int prev[];
+    static int nxt[];
+    static int arr[];
+    static int n;
+    static boolean used[];
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    	n = sc.nextInt();
+    	prev = new int[n+2];
+    	nxt = new int[n+2];
+    	arr = new int[n+2];
+    	used = new boolean[n+2];
+    	for(int i=1;i<=n;i++){
+    		arr[i] = sc.nextInt();
+    		prev[i]=i-1;
+    		nxt[i]=i+1;
+    	}
+    	arr[0]=-2;
+    	arr[n+1]=-2;
+	    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b)->b[0]-a[0]);
+	    for(int i=1;i<=n;i++){
+	    	if(good(i)){
+	    		used[i]=true;
+	    		pq.add(new int[]{arr[i], i});
+	    	}
+	    }
+	    while(!pq.isEmpty()){
+	    	int top[] = pq.remove();
+	    	int i = top[1];
+	    	nxt[prev[i]]=nxt[i];
+	    	prev[nxt[i]]=prev[i];
+	    	if(!used[prev[i]] && good(prev[i])){
+	    		used[prev[i]]=true;
+	    		pq.add(new int[]{arr[prev[i]], prev[i]});
+	    	}
+	    	if(!used[nxt[i]] && good(nxt[i])){
+	    		used[nxt[i]]=true;
+	    		pq.add(new int[]{arr[nxt[i]], nxt[i]});
+	    	}
+	    }
+
+	    int min=n,bad=0;
+	    for(int i=1;i<=n;i++){
+	    	if(!used[i]) bad++;
+	    	min = Math.min(arr[i],min);
+	    }
+
+	    if(bad == 1 && min == 0){
+	    	System.out.println("Yes");
+	    	return;
+	    }
+	    System.out.println("No");
+
+	}
+
+    static boolean good(int i){
+    	if(i<1 || i>n){
+    		return false;
+    	}
+
+    	return arr[i]-1==arr[prev[i]] || arr[i]-1==arr[nxt[i]];
     }
 
     static FastScanner sc = new FastScanner();

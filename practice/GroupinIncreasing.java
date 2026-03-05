@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class GroupinIncreasing {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,8 +83,27 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	int n = sc.nextInt();
+    	int x = Integer.MAX_VALUE;
+    	int y = Integer.MIN_VALUE;
+
+    	int ans = 0;
+    	for(int i=0;i<n;i++){
+    		int num = sc.nextInt();
+    		if(x>y){
+    			int t=x;
+    			x=y;
+    			y=t;
+    		}
+    		if(num<=x) x=num;
+    		else if(num<=y) y=num;
+    		else{
+    			x=num;
+    			ans++;
+    		}
+    	}
+    	ans = ans==0 ? 0 : ans-1;
+    	System.out.println(ans);
         
     }
 

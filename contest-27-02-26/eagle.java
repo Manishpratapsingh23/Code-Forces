@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class eagle {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,8 +83,8 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	System.out.println("Hello...");
+    	return;
         
     }
 

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class LvaAndPav {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,9 +83,55 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    	int n = sc.nextInt();
+    	int arr[] = new int[n+1];
+    	int prefix[][] = new int[n+1][31];
+    	Arrays.fill(prefix[0],0);
+    	for(int i=1;i<=n;i++){
+    		int x = sc.nextInt();
+    		arr[i]=x;
+    		for(int bit=0;bit<31;bit++){
+    			prefix[i][bit] = prefix[i-1][bit]+((x>>bit)&1);
+    		}
+    	}
+
+	    	// for(int a[] : prefix){
+	    	// 	for(int i : a){
+	    	// 		System.out.print(i+" ");
+	    	// 	}
+	    	// 	System.out.println();
+	    	// }
+
+    	int q = sc.nextInt();
+
+    	while(q-- > 0){
+    		int ll = sc.nextInt();
+    		int ans = ll;
+    		int k = sc.nextInt();
+    		if(arr[ll]<k){
+    			System.out.print(-1+" ");
+    			continue;
+    		}
+    		int l = ll;
+    		int r = n;
+    		while(l<=r){
+    			int m = l+(r-l)/2;
+    			int req = m-ll+1;
+    			int num = 0;
+    			for(int i=0;i<31;i++){
+    				int bit = (prefix[m][i]-prefix[ll-1][i])==req ? 1 : 0;
+    				bit = bit&(arr[ll]>>i);
+    				num = num | (bit<<i);
+    			}
+    			if(num>=k){
+    				l=m+1;
+    			} else {
+    				r=m-1;
+    			}
+    		}
+    		System.out.print(r+" ");
+    	}
+        System.out.println();
     }
 
     static FastScanner sc = new FastScanner();

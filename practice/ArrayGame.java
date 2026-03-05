@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class ArrayGame {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,66 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        long k = sc.nextLong();
+
+        long arr[] = new long[n];
+
+        for(int i=0;i<n;i++){
+        	arr[i] = sc.nextLong();
+        }
+
+        if(k>=3){
+        	System.out.println(0);
+        	return;
+        }
+        long diff = arr[0];
+        Arrays.sort(arr);
+        for(int i=0;i<n-1;i++){
+        	diff = Math.min(diff, arr[i+1]-arr[i]);
+        }
+        if(k==1){
+        	System.out.println(diff);
+        	return;
+        }
+
+        for(int i=0;i<n;i++){
+        	for(int j=0;j<i;j++){
+        		long v = arr[i]-arr[j];
+        		int p = lowerBound(arr,v);
+        		if(p<0) p=-(p+1);
+        		if(p<n){
+        			diff = Math.min(diff, arr[p]-v);
+        		}
+        		if(p>0){
+        			diff=Math.min(diff,v-arr[p-1]);
+        		}
+        	}
+        }
+        System.out.println(diff);
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
+    public static int lowerBound(long[] a, long v) {
+	    int low = 0;
+	    int high = a.length;
+	    while (low < high) {
+	        int mid = low + (high - low) / 2;
+	        if (a[mid] >= v) {
+	            high = mid;
+	        } else {
+	            low = mid + 1;
+	        }
+	    }
+	    return low;
+	}
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
     }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
-    }
 }
+

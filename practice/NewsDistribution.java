@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class NewsDistribution {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,36 +80,63 @@ class Main {
         }
         return spf;
     }
+    static int parent[];
+    static int size[];
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        parent = new int[n+1];
+        size = new int[n+1];
+        for(int i=0;i<=n;i++){
+        	parent[i] = i;
+        	size[i]=1;
+        }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+        int m = sc.nextInt();
+        while(m-- > 0){
+        	int k = sc.nextInt();
+        	if(k==0) continue;
+        	int src = sc.nextInt();
+        	for(int i=1;i<k;i++){
+        		int des = sc.nextInt();
+        		union(src,des);
+        	}
+        }
+
+        for(int i=1;i<=n;i++){
+        	parent[i]=findParent(i);
+        }
+        for(int i=1;i<=n;i++){
+        	System.out.print(size[parent[i]]+" ");
+        }
+        System.out.println();
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
+    private static void union(int src, int des){
+    	int psrc = findParent(src);
+    	int pdes = findParent(des);
+    	if(psrc==pdes) return;
+    	if(size[psrc]<size[pdes]){
+    		int t = psrc;
+    		psrc = pdes;
+    		pdes = t;
+    	}
+    	parent[pdes]=psrc;
+    	size[psrc]+=size[pdes];
+    }
 
-    public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+    private static int findParent(int src){
+    	while(parent[src]!=src){
+    		parent[src] = parent[parent[src]];
+    		src = parent[src];
+    	}
+    	return src;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
+        //}
     }
 }

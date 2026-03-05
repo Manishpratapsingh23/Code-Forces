@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class BalancedBitString {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,9 +83,39 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
+    	int n = sc.nextInt();
+    	int k = sc.nextInt();
+        String s = sc.next();
+        String st = "";
+    	for(int i=0;i<k;i++){
+            int t=1;
+            char ch = s.charAt(i);
+            while((i+t*k)<n){
+                if(s.charAt(i+t*k)!='?'){
+                    if(ch!='?' && s.charAt(i+t*k)!=ch){
+                    System.out.println("No");
+                    return;
+                    }
+                ch=s.charAt(i+t*k);
+                
+                }
+                t++;
+            }
+            st+=ch;
+        }
+        int a=0,b=0,c=0;
+        for(char ch : st.toCharArray()){
+            if(ch=='?') c++;
+            else if(ch=='1') a++;
+            else b++;
+        }
+
+        if(a>k/2 || b>k/2){
+            System.out.println("No");
+            return;
+        }
+        System.out.println("Yes");
         return;
-        
     }
 
     static FastScanner sc = new FastScanner();

@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class  Cutemall {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,36 +80,59 @@ class Main {
         }
         return spf;
     }
-
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    static class pair{
+    	int in;
+    	int node;
+    	public pair(int in, int node){
+    		this.node=node;
+    		this.in=in;
+    	}
+    }
+    static Map<Integer, List<Integer>> map;
+    static int visted[];
+    static int ans;
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        map = new HashMap<>();
+        visted = new int[n+1];
+        Arrays.fill(visted,-1);
+        for(int i=1;i<=n;i++) map.put(i,new ArrayList<>());
+        for(int i=1;i<n;i++){
+        	int src = sc.nextInt();
+        	int des = sc.nextInt();
+        	map.get(src).add(des);
+        	map.get(des).add(src);
+        }
+        if(n%2==1){
+        	System.out.println(-1);
+        	return;
+        }
+        ans = 0;
+        dfs(1);
+        System.out.println(ans);
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
+    private static int dfs(int src){
+    	if(visted[src]!=-1) return 0;
+    	visted[src]=1;
+    	int sum=0;
+    	for(int nbrs : map.get(src)){
+    		if(visted[nbrs]!=-1) continue;
+    		int res = dfs(nbrs);
+    		if(res%2==1){
+    			sum+=res;
+    		} else {
+    			ans++;
+    		}
+    	}
+    	return 1+sum;
+    }
 
-    public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
+        //}
     }
 }

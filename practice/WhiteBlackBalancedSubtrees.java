@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class WhiteBlackBalancedSubtrees {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,62 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    static class TreeNode{
+    	int data;
+    	List<TreeNode> children;
+    	public TreeNode(int data){
+    		this.data=data;
+    		children = new ArrayList<>();
+    	}
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
+    static class pair{
+    	int black;
+    	int white;
+    	public pair(int black, int white){
+    		this.black=black;
+    		this.white=white;
+    	}
+    }
 
-    public static void main(String[] args) throws Exception {
+    static int ans;
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        ans = 0;
+        TreeNode tree[] = new TreeNode[n+1];
+        //int parent[] = new int[n+1];
+        for(int i=0;i<=n;i++) tree[i] = new TreeNode(i);
+
+        for(int i=2;i<=n;i++){
+        	int parent = sc.nextInt();
+        	tree[parent].children.add(tree[i]);
+        }
+        String s = sc.next();
+        dfs(tree[1],s);
+        System.out.println(ans);
+    }
+
+    private static pair dfs(TreeNode root, String s){
+
+    	int white = 0;
+    	int black = 0;
+    	for(TreeNode child : root.children){
+    		pair ans = dfs(child, s);
+    		white+=ans.white;
+    		black+=ans.black;
+    	}
+    	white += s.charAt(root.data-1)=='W' ? 1 : 0; 
+    	black += s.charAt(root.data-1)=='W' ? 0 : 1;
+
+    	if(black==white) ans++;
+    	return new pair(black, white);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class LineEmpire {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,11 +81,42 @@ class Main {
         }
         return spf;
     }
-
+    static Map<String, Long> map;
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	map = new HashMap<>();
+    	int n = (int)sc.nextLong();
+    	long a = sc.nextLong();
+    	long b = sc.nextLong();
+    	long pos[] = new long[n+1];
+    	pos[0]=0L;
+        long prefix[] = new long[n+1];
+        prefix[0]=0L;
+    	for(int i=1;i<=n;i++){
+            pos[i]=sc.nextLong();
+            prefix[i] = pos[i]+prefix[i-1];
+        }
+    	long totalCost = Long.MAX_VALUE;
+        for(int i=0;i<=n;i++){
+            long ledftCost = (a+b)*pos[i];
+            long rightCost = b*(prefix[n]-prefix[i]-(n-i)*pos[i]);
+            long total = ledftCost+rightCost;
+            totalCost = Math.min(totalCost, total);
+        }
+
         
+        System.out.println(totalCost);
+    }
+
+    private static long helper(int prev, int curr, int pos[], int a, int b){
+    	if(curr>=pos.length) return 0L;
+        //if (prev > curr) return 0L;
+    	String key = prev+" "+curr;
+    	if(map.containsKey(key)) return map.get(key);
+    	long op1 = helper(prev, curr+1, pos, a, b);
+    	long op2 = a*(pos[curr]-pos[prev])+helper(prev+1, curr+1, pos, a, b);
+    	long ans = b*(pos[curr]-pos[prev])+Math.min(op1, op2);
+    	map.put(key, ans);
+    	return ans;
     }
 
     static FastScanner sc = new FastScanner();

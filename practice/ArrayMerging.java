@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class ArrayMerging {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,54 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        int a[] = new int[n];
+        int b[] = new int[n];
+
+        for(int i=0;i<n;i++) a[i]=sc.nextInt();
+        for(int i=0;i<n;i++) b[i]=sc.nextInt();
+        int c1=1,c2=1,c3=1,c4=1;
+        int ans = 0;
+        int idx=1;
+        while(idx<n && a[idx]==a[0]){
+        	c1++;
+        	idx++;
+        }
+        idx=1;
+        while(idx<n && b[idx]==b[0]){
+        	c3++;
+        	idx++;
+        }
+        idx=n-2;
+        while(idx>=0 && a[idx]==a[n-1]){
+        	c2++;
+        	idx--;
+        }
+        idx=n-2;
+        while(idx>=0 && b[idx]==b[n-1]){
+        	c4++;
+        	idx--;
+        }
+        ans = Math.max(ans,c1);
+        ans = Math.max(ans,c2);
+        ans = Math.max(ans,c3);
+        ans = Math.max(ans,c4);
+
+
+        //int ans = 0;
+        if(a[0]==b[n-1]) ans = Math.max(ans, c1+c4);
+        if(b[0]==a[n-1]) ans = Math.max(ans, c2+c3);
+        System.out.println(ans);
+        
         
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

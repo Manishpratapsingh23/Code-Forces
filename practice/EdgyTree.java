@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class EdgyTree {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,36 +80,73 @@ class Main {
         }
         return spf;
     }
+    static int cnt;
+    static Map<Integer, List<Integer>> map;
+    static int visted[];
+    static int mod = 1000000007;
+	
+    private static void solve_kro(Scanner sc){
+        map = new HashMap<>();
+        int n = sc.nextInt();
+        visted = new int[n+1];
+        Arrays.fill(visted,-1);
+        int k = sc.nextInt();
+        for(int i=1;i<=n;i++) map.put(i, new ArrayList<>());
+        for(int i=1;i<n;i++){
+        	int src = sc.nextInt();
+        	int des = sc.nextInt();
+        	int cc = sc.nextInt();
+        	if(cc==0){
+        		map.get(src).add(des);
+        		map.get(des).add(src);
+        	}
+        }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+        long ans = 0L;
+        for(int i=1;i<=n;i++){
+        	if(visted[i]!=-1) continue;
+        	cnt = 0;
+        	dfs(i);
+        	ans = (ans+fastPow(cnt,k))%mod;
+        }
+
+        ans = (fastPow(n,k)-ans+mod)%mod;
+        System.out.println(ans);
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
+    public static long fastPow(long a, long b){
+    	a %= mod;
+	    long result = 1;
 
-    public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+	    while(b > 0){
+	        if((b & 1) == 1)
+	            result = (result * a) % mod;
+	        a = (a * a) % mod;
+	        b >>= 1;
+	    }
+    	return result;
+    }
+
+    private static void dfs(int src){
+    	Queue<Integer> queue = new LinkedList<>();
+    	queue.add(src);
+    	visted[src]=1;
+    	while(!queue.isEmpty()){
+    		int node = queue.remove();
+    		cnt++;
+    		for(int nbrs : map.get(node)){
+    			if(visted[nbrs]!=-1) continue;
+    			visted[nbrs]=1;
+    			queue.add(nbrs);
+    		}
+    	}
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
+        //}
     }
 }

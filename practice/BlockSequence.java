@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class BlockSequence {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,9 +83,26 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    	// System.out.println("Hello...");
+    	// return;
+    	int n = sc.nextInt();
+    	int arr[] = new int[n+1];
+    	int memo[] = new int[n+1];
+    	Arrays.fill(memo,-1);
+    	for(int i=1;i<=n;i++) arr[i] = sc.nextInt();
+    	int ans = helper(1,arr,memo);
+    	System.out.println(ans);
+    }
+
+    private static int helper(int idx, int arr[], int memo[]){
+    	if(idx>=arr.length) return 0;
+    	if(memo[idx]!=-1) return memo[idx];
+    	int op1=Integer.MAX_VALUE,op2=Integer.MAX_VALUE;
+    	if(idx+arr[idx]<arr.length){
+    		op1 = helper(idx+arr[idx]+1, arr, memo);
+    	}
+    	op2 = 1+helper(idx+1, arr, memo);
+    	return memo[idx] = Math.min(op1,op2);
     }
 
     static FastScanner sc = new FastScanner();

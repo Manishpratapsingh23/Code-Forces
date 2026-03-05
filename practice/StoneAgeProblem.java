@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class StoneAgeProblem {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,60 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    static class pair{
+        long val;
+        int query;
+        public pair(long val, int query){
+            this.val=val;
+            this.query=query;
+        }
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
 
-    public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        int qq = sc.nextInt();
+        //Map<Integer, Long> map = new HashMap<>();
+        pair arr[] = new pair[n];
+        long sum = 0;
+        for(int i=0;i<n;i++){
+        	long x = sc.nextLong();
+        	//map.put(i+1,x);
+            arr[i]=new pair(x,0);
+        	sum+=x;
+        }
+        pair global=new pair(0,-1);
+        int q=1;
+        while(q<=qq){
+        	int op = sc.nextInt();
+        	if(op==1){
+        		int idx = sc.nextInt()-1;
+        		long x = sc.nextLong();
+        		if(arr[idx].query>global.query){
+                    sum+=x-arr[idx].val;
+                } else {
+                    sum+=x-global.val;
+                }
+                arr[idx].val=x;
+                arr[idx].query=q;
+        	} else {
+        		long x = sc.nextLong();
+        		//map.clear();
+        		sum=x*n;
+                global.val=x;
+                global.query=q;
+        	}
+        	System.out.println(sum);
+        	q++;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
+        //}
     }
 }

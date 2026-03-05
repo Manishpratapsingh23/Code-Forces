@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class EraseFirstorSecondLetter {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,36 +80,34 @@ class Main {
         }
         return spf;
     }
+    static int ans;
+    static Set<String> set;
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        String s = sc.next();
+        ans=0;
+        set = new HashSet<>();
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+        helper(s);
+        System.out.println(ans);
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
+    private static void helper(String s){
+    	if(s.length()==0 || set.contains(s)) return;
+    	ans++;
+    	set.add(s);
+    	helper(s.substring(1));
+    	if(s.length()<=1){
+    		return;
+    	}
+    	helper(s.charAt(0)+s.substring(2));
+    }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

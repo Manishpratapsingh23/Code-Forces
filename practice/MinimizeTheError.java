@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class MinimizeTheError {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,10 +81,34 @@ class Main {
         }
         return spf;
     }
-
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	int n = sc.nextInt();
+    	long arr1[] = new long[n];
+    	long arr2[] = new long[n];
+    	long k1=sc.nextLong();
+    	long k2=sc.nextLong();
+    	for(int i=0;i<n;i++) arr1[i]=sc.nextLong();
+    	for(int i=0;i<n;i++) arr2[i]=sc.nextLong();
+    	PriorityQueue<Long> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+    	for(int i=0;i<n;i++){
+    		pq.add(Math.abs(arr1[i]-arr2[i]));
+    	}
+    	long k = k1+k2;
+    	while(!pq.isEmpty() && k>0){
+    		long err = pq.remove();
+    		if(err==0) break;
+    		err--;
+    		pq.add(err);
+    		k--;
+    	}
+
+    	long err = 0;
+    	while(!pq.isEmpty()){
+    		long d = pq.remove();
+    		err += d*d;
+    	}
+    	System.out.println(err+(k&1));
         
     }
 
@@ -92,10 +116,10 @@ class Main {
     static StringBuilder out = new StringBuilder();
 
     public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
+        ///int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
-        }
+        //}
     }
 
     static class FastScanner{

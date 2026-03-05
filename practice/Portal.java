@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class Portal {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,9 +83,39 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    	int n = sc.nextInt();
+    	List<Integer> outer = new ArrayList<>();
+    	List<Integer> mid = new ArrayList<>();
+    	int x = sc.nextInt();
+    	int y = sc.nextInt();
+    	for(int i=1;i<=n;i++){
+    		if(i<=x || i>y) outer.add(sc.nextInt());
+    		else mid.add(sc.nextInt());
+    	}
+
+    	int min = n+1;
+        int minIdx = -1;
+    	for(int i=0;i<mid.size();i++){
+            if(mid.get(i)<min){
+                min = mid.get(i);
+                minIdx=i;
+            }
+        }
+    	StringBuilder sb = new StringBuilder();
+    	int l=0;
+    	for(l=0;l<outer.size();l++){
+    		if(outer.get(l)>=min) break;
+    		sb.append(outer.get(l)).append(" ");
+    	}
+        int mm = mid.size();
+    	for(int i=0;i<mid.size();i++){
+            int el = mid.get((i+minIdx)%mm);
+            sb.append(el).append(" ");
+        }
+    	for(;l<outer.size();l++){
+    		sb.append(outer.get(l)).append(" ");
+    	}
+    	System.out.println(sb.toString());
     }
 
     static FastScanner sc = new FastScanner();

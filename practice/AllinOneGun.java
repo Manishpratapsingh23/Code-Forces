@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class AllinOneGun {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -82,35 +81,50 @@ class Main {
         return spf;
     }
 
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        long h = sc.nextLong();
+        long k = sc.nextLong();
+        long arr[] = new long[n];
+        long prefix[] = new long[n];
+        for(int i=0;i<n;i++){
+        	arr[i] = sc.nextLong();
+        	prefix[i] = arr[i];
+        	if(i>0) prefix[i]+=prefix[i-1];
+        }
+
+        long sum = prefix[n-1];
+
+        long used = (h-1)/sum;
+        long time = (k+n)*used;
+        h-=used*sum;
+        if(h<=0){
+        	System.out.println(time);
+        	return;
+        }
+        long rightMax[] = new long[n+1];
+        rightMax[n]=arr[n-1];
+        for(int i=n-1;i>=0;i--){
+        	rightMax[i] = Math.max(arr[i], rightMax[i+1]);
+        }
+
+        long leftMin = arr[0];
+        for(int i=0;i<n;i++){
+        	leftMin = Math.min(leftMin, arr[i]);
+        	long currSum = prefix[i]-leftMin+rightMax[i+1];
+        	if(h<=currSum || h<=prefix[i]){
+        		System.out.println(time+i+1);
+        		return;
+        	}
+        }
+
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

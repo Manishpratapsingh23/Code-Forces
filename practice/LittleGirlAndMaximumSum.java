@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+public class LittleGirlAndMaximumSum {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -83,8 +83,27 @@ class Main {
     }
 
     private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
+    	int n = sc.nextInt();
+    	int q = sc.nextInt();
+    	int arr[] = new int[n];
+    	for(int i=0;i<n;i++) arr[i]=sc.nextInt();
+    	long diff[] = new long[n+1];
+    	while(q-- > 0){
+    		int l = sc.nextInt()-1;
+    		int r = sc.nextInt()-1;
+    		diff[l]++;
+    		diff[r+1]--;
+    	}
+    	for(int i=1;i<=n;i++){
+    		diff[i]+=diff[i-1];
+    	}
+    	Arrays.sort(diff);
+    	Arrays.sort(arr);
+    	long ans = 0;
+    	for(int i=0;i<n;i++){
+    		ans+=(diff[i+1]*arr[i]);
+    	}
+    	System.out.println(ans);
         
     }
 
@@ -92,10 +111,10 @@ class Main {
     static StringBuilder out = new StringBuilder();
 
     public static void main(String[] args) throws Exception {
-        int test = sc.nextInt();
-        while (test-- > 0) {
-            solve_kro(sc);
-        }
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
+            solve_kro(sc) ;
+        //}
     }
 
     static class FastScanner{

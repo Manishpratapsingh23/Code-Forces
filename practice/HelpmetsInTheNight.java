@@ -1,7 +1,6 @@
-import java.io.*;
 import java.util.*;
 
-class Main {
+public class HelpmetsInTheNight {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,36 +80,54 @@ class Main {
         }
         return spf;
     }
-
-    private static void solve_kro(FastScanner sc) throws Exception{
-        System.out.println("Hello...");
-        return;
-        
+    static class pair{
+        long people;
+        long cost;
+        public pair(long people, long cost){
+            this.people=people;
+            this.cost=cost;
+        }
     }
 
-    static FastScanner sc = new FastScanner();
-    static StringBuilder out = new StringBuilder();
+    private static void solve_kro(Scanner sc){
+        int n = sc.nextInt();
+        long pp = sc.nextLong();
+        long a[] = new long[n];
+        for(int i=0;i<n;i++) a[i] = sc.nextLong();
+        long b[] = new long[n];
+        for(int i=0;i<n;i++) b[i] = sc.nextLong();
+        List<pair> lst = new ArrayList<>();
+        for(int i=0;i<n;i++){
+            lst.add(new pair(a[i], b[i]));
+        }
 
-    public static void main(String[] args) throws Exception {
+        Collections.sort(lst, Comparator.comparingLong(pair -> pair.cost));
+        long min = pp;
+        long shared = 1;
+        for(pair p : lst){
+            long ppl = p.people;
+            long cost = p.cost;
+            if(cost>=pp) break;
+
+            if(shared+ppl>n){
+                min+=(n-shared)*cost;
+                shared=n;
+                break;
+            } else {
+                min+=ppl*cost;
+                shared+=ppl;
+            }
+        }
+
+        min+=(n-shared)*pp;
+        System.out.println(min);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
-    }
-
-    static class FastScanner{
-        BufferedReader br;
-        StringTokenizer st;
-        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() throws Exception{
-            while(st==null || !st.hasMoreElements()){
-                st = new StringTokenizer(br.readLine());
-            }
-            return st.nextToken();
-        }
-        int nextInt() throws Exception{ return Integer.parseInt(next()); }
-        long nextLong() throws Exception{ return Long.parseLong(next()); }
-        String nextLine() throws IOException { return br.readLine(); }
-        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }
