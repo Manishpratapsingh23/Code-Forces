@@ -85,8 +85,8 @@ public class WOWFactor {
     private static void solve_kro(FastScanner sc) throws Exception{
     	String s = sc.next();
     	int n = s.length();
-    	int prefix[] = new int[n];
-    	int suffix[] = new int[n];
+    	long prefix[] = new long[n];
+    	long suffix[] = new long[n];
 
     	for(int i=1;i<n;i++){
     		if(i>0 && s.charAt(i)=='v' && s.charAt(i-1)=='v'){
