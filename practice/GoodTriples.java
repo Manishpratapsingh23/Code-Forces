@@ -1,6 +1,7 @@
+import java.io.*;
 import java.util.*;
 
-public class LostCivilizationEasyVersion {
+public class GoodTriples {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,35 +82,52 @@ public class LostCivilizationEasyVersion {
         return spf;
     }
 
-    private static void solve_kro(Scanner sc){
-        int n = sc.nextInt();
-        int arr[] = new int[n];
-        for(int i=0;i<n;i++) arr[i] = sc.nextInt();
-        int ans=1;
-        int x=arr[0], y=arr[0];
-        for(int i=1;i<n;i++){
-        	if(arr[i]==y+1){
-        		y=arr[i];
-        		continue;
-        	}
-        	else if(arr[i]>=x+1 && arr[i]<=y){
-        		y=arr[i];
-        		continue;
-        	}
-        	else{
-        		x=arr[i];
-        		ans++;
-        	}
-        	y=arr[i];
+    private static void solve_kro(FastScanner sc) throws Exception{
+    	int n = sc.nextInt();
+        long ans = 1L;
+        while(n>0){
+        	ans*=ways[n%10];
+        	n/=10;
         }
         System.out.println(ans);
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    static FastScanner sc = new FastScanner();
+    static StringBuilder out = new StringBuilder();
+    static int ways[] = new int[10];
+    static void compute(){
+    	for(int i=0;i<10;i++){
+    		for(int j=0;j<10;j++){
+    			for(int k=0;k<10;k++){
+    				if(i+j+k<10){
+    					ways[i+j+k]++;
+    				}
+    			}
+    		}
+    	}
+    }
+
+    public static void main(String[] args) throws Exception {
+    	compute();
         int test = sc.nextInt();
         while (test-- > 0) {
             solve_kro(sc);
         }
+    }
+
+    static class FastScanner{
+        BufferedReader br;
+        StringTokenizer st;
+        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
+        String next() throws Exception{
+            while(st==null || !st.hasMoreElements()){
+                st = new StringTokenizer(br.readLine());
+            }
+            return st.nextToken();
+        }
+        int nextInt() throws Exception{ return Integer.parseInt(next()); }
+        long nextLong() throws Exception{ return Long.parseLong(next()); }
+        String nextLine() throws IOException { return br.readLine(); }
+        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

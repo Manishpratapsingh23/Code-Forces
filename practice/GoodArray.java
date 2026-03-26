@@ -1,6 +1,7 @@
+import java.io.*;
 import java.util.*;
 
-public class LostCivilizationEasyVersion {
+public class GoodArray {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,35 +82,60 @@ public class LostCivilizationEasyVersion {
         return spf;
     }
 
-    private static void solve_kro(Scanner sc){
-        int n = sc.nextInt();
-        int arr[] = new int[n];
-        for(int i=0;i<n;i++) arr[i] = sc.nextInt();
-        int ans=1;
-        int x=arr[0], y=arr[0];
-        for(int i=1;i<n;i++){
-        	if(arr[i]==y+1){
-        		y=arr[i];
-        		continue;
-        	}
-        	else if(arr[i]>=x+1 && arr[i]<=y){
-        		y=arr[i];
-        		continue;
-        	}
-        	else{
-        		x=arr[i];
-        		ans++;
-        	}
-        	y=arr[i];
-        }
-        System.out.println(ans);
+    private static void solve_kro(FastScanner sc) throws Exception{
+    	Map<Long,Integer> map = new HashMap<>();
+    	int n = sc.nextInt();
+    	long arr[] = new long[n];
+    	long sum = 0L;
+    	for(int i=0;i<n;i++){
+    		arr[i] = sc.nextLong();
+    		map.put(arr[i], map.getOrDefault(arr[i],0)+1);
+    		sum+=arr[i];
+    	}
+    	List<Integer> ans = new ArrayList<>();
+    	for(int i=0;i<n;i++){
+    		long ss = sum-arr[i];
+    		if(ss%2!=0) continue;
+    		long tt = ss/2;
+
+    		if(map.containsKey(tt)){
+    			map.put(arr[i],map.get(arr[i])-1);
+    			if(map.get(tt)>0) ans.add(i+1);
+    			map.put(arr[i],map.get(arr[i])+1);
+    		}
+    	}
+    	System.out.println(ans.size());
+    	for(int i=0;i<ans.size();i++){
+    		System.out.print(ans.get(i)+" ");
+    	}
+    	System.out.println();
+
+        
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int test = sc.nextInt();
-        while (test-- > 0) {
+    static FastScanner sc = new FastScanner();
+    static StringBuilder out = new StringBuilder();
+
+    public static void main(String[] args) throws Exception {
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
+        //}
+    }
+
+    static class FastScanner{
+        BufferedReader br;
+        StringTokenizer st;
+        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
+        String next() throws Exception{
+            while(st==null || !st.hasMoreElements()){
+                st = new StringTokenizer(br.readLine());
+            }
+            return st.nextToken();
         }
+        int nextInt() throws Exception{ return Integer.parseInt(next()); }
+        long nextLong() throws Exception{ return Long.parseLong(next()); }
+        String nextLine() throws IOException { return br.readLine(); }
+        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

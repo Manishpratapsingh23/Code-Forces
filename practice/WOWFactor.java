@@ -1,6 +1,7 @@
+import java.io.*;
 import java.util.*;
 
-public class LostCivilizationEasyVersion {
+public class WOWFactor {
 
     // prime check TC: O(underroot N)
     private static boolean checkPrime(int n){
@@ -81,35 +82,60 @@ public class LostCivilizationEasyVersion {
         return spf;
     }
 
-    private static void solve_kro(Scanner sc){
-        int n = sc.nextInt();
-        int arr[] = new int[n];
-        for(int i=0;i<n;i++) arr[i] = sc.nextInt();
-        int ans=1;
-        int x=arr[0], y=arr[0];
-        for(int i=1;i<n;i++){
-        	if(arr[i]==y+1){
-        		y=arr[i];
-        		continue;
-        	}
-        	else if(arr[i]>=x+1 && arr[i]<=y){
-        		y=arr[i];
-        		continue;
-        	}
-        	else{
-        		x=arr[i];
-        		ans++;
-        	}
-        	y=arr[i];
-        }
-        System.out.println(ans);
+    private static void solve_kro(FastScanner sc) throws Exception{
+    	String s = sc.next();
+    	int n = s.length();
+    	int prefix[] = new int[n];
+    	int suffix[] = new int[n];
+
+    	for(int i=1;i<n;i++){
+    		if(i>0 && s.charAt(i)=='v' && s.charAt(i-1)=='v'){
+    			prefix[i]=1+prefix[i-1];
+    		} else {
+    			prefix[i]=prefix[i-1];
+    		}
+    	}
+
+    	for(int i=n-2;i>=0;i--){
+    		if(i<n-1 && s.charAt(i)=='v' && s.charAt(i+1)=='v'){
+    			suffix[i]=1+suffix[i+1];
+    		} else {
+    			suffix[i]=suffix[i+1];
+    		}
+    	}
+    	long ans = 0;
+    	for(int i=1;i<n-1;i++){
+    		if(s.charAt(i)=='o'){
+    			ans+=(prefix[i-1]*suffix[i+1]);
+    		}
+    	}
+    	System.out.println(ans);
+        
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int test = sc.nextInt();
-        while (test-- > 0) {
+    static FastScanner sc = new FastScanner();
+    static StringBuilder out = new StringBuilder();
+
+    public static void main(String[] args) throws Exception {
+        //int test = sc.nextInt();
+        //while (test-- > 0) {
             solve_kro(sc);
+        //}
+    }
+
+    static class FastScanner{
+        BufferedReader br;
+        StringTokenizer st;
+        FastScanner(){ br = new BufferedReader(new InputStreamReader(System.in)); }
+        String next() throws Exception{
+            while(st==null || !st.hasMoreElements()){
+                st = new StringTokenizer(br.readLine());
+            }
+            return st.nextToken();
         }
+        int nextInt() throws Exception{ return Integer.parseInt(next()); }
+        long nextLong() throws Exception{ return Long.parseLong(next()); }
+        String nextLine() throws IOException { return br.readLine(); }
+        public double nextDouble() throws Exception { return Double.parseDouble(next()); }
     }
 }

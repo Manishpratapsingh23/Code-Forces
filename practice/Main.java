@@ -1,78 +1,64 @@
-
-
+import java.io.*;
 import java.util.*;
 
-class Node {
-	char data;
-	Node left;
-	Node right;
-
-	public Node(char data) 
-	{
-		this.data = data;
-	}
-}
-
 public class Main {
-	static Node root;
-	static int idx;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter wr = new PrintWriter(System.out);
+        
+        String line = br.readLine();
+        if (line == null) return;
+        int T = Integer.parseInt(line.trim());
+        
+        while (T-- > 0) {
+            int N = Integer.parseInt(br.readLine().trim());
+            String[] arr_A = br.readLine().trim().split("\\s+");
+            int[] A = new int[N];
+            for (int i = 0; i < N; i++) {
+                A[i] = Integer.parseInt(arr_A[i]);
+            }
+            long K = Long.parseLong(br.readLine().trim());
 
-	public static Node build(String s) {
-		char chr = s.charAt(idx);
-		if (chr == '.') {
-			return null;
-		}
-		Node node = new Node(chr);
-		idx += 1;
-		node.left = build(s);
-		idx += 1;
-		node.right = build(s);
-//		idx+=1;
-		return node;
+            wr.println(solve(N, A, K));
+        }
+        wr.close();
+        br.close();
+    }
 
-	}
+    static long solve(int N, int[] A, long K) {
+        if (N < 3) return 0;
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int t = sc.nextInt();
-		while (t-- > 0) {
-			int n = sc.nextInt();
-			String s1 = sc.next();
-			String s = "";
-			for (int i = 0; i < s1.length(); i++) {
-				char ch = s1.charAt(i);
-				if (ch == ')' || ch == '(') {
-					continue;
-				} else {
-					s += ch;
-				}
-			}
-			idx = 0;
-			root = build(s);
-			List<Character> ll = new ArrayList<>();
-			dfs(root, n, 0, ll);
-			Collections.sort(ll);
-			if (ll.size() == 0) {
-				System.out.println("Common Gandhijee!");
-			} else {
-				for (int i = 0; i < ll.size(); i++) {
-					System.out.print(ll.get(i));
-				}
-				System.out.println();
-			}
-			
-		}
-	}
+        long low = 1;
+        // Max possible height is max(A) + K, but 2e9 is a safe upper bound
+        long high = 2000000000L; 
+        long result = 0;
 
-	private static void dfs(Node nn, int n, int i, List<Character> ll) {
-		// TODO Auto-generated method stub
-		if (nn == null)
-			return;
-		if (n == i)
-			ll.add(nn.data);
-		dfs(nn.left, n, i - 1, ll);
-		dfs(nn.right, n, i + 1, ll);
+        while (low <= high) {
+            long mid = low + (high - low) / 2;
+            if (isPossible(mid, N, A, K)) {
+                result = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return result;
+    }
 
-	}
-
+    private static boolean isPossible(long H, int N, int[] A, long K) {
+        // We only need ONE position to satisfy the condition within budget K
+        for (int i = 1; i <= N - 2; i++) {
+            long currentCost = Math.abs((long)A[i] - H);
+            
+            // Neighbor constraints: neighbors must be strictly less than H
+            // To minimize cost, we only adjust them if they are >= H
+            long leftNeighborCost = Math.max(0L, (long)A[i-1] - (H - 1));
+            long rightNeighborCost = Math.max(0L, (long)A[i+1] - (H - 1));
+            
+            if (currentCost + leftNeighborCost + rightNeighborCost <= K) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
